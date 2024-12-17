@@ -2,7 +2,7 @@
         <head>
         <title>cp_hw</title>
         <meta charset="utf-8">
-<meta property="head" content="H2">
+<meta property="head" content="H3">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="./../cmsimde/static/chimper/fonts/icomoon/style.css">
         <link rel="stylesheet" href="./../cmsimde/static/chimper/css/bootstrap.min.css">
@@ -141,88 +141,304 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">W5 << <a href='W5.html'>Previous</a> <a href='w7.html'>Next</a> >> w7<br /><h1>w6</h1>
-<ol>
-<li>下載 python_2025_lite.7z（可攜程式環境）</li>
-<li>下載 zmq_remote_api ex cube_triangle.7z（税用 Python 控制模擬場景中的物件）</li>
-<li>進入可攜程式環境中 data/CoppeliaSim 目錄，開啟 coppeliasim.exe（機電整合模擬程式，原始碼）</li>
-<li>啟動可攜程式環境，雙點擊 start_ipv6.bat，系統會啟動四個命令列，兩個 SciTE 編輯器</li>
-<li>執行場景控制程式前，先處理操作系統的防火牆，將下列指令存為，<wbr/>bat 檔案後，以管理員身袋執行，以便開啟 23000-23050 號進出：</li>
-<li>netsh advfirewall firewall add rule name="allow _23000-23050™ dir=in action=allow protocol=TCP localport=23000-23050 netsh advfirewall firewall add rule name="allow_23000-23050" dir=out action=allow protocol=TCP localport=23000-23050 </li>
-<li>開啟 CoppeliaSim 中的視覺串流伺服器：Modules - Connectivity - Visualization stream </li>
-<li>利用 SCITE 開啟 put_cubes_into_scene__1.py， 利用 Tools -Go 執行操控程式</li>
-<li>使用者可以透過瀏覽器,以模擬場景所在電腦的IP,<wbr/>且埠號為23020 觀看模擬場</li>
-</ol>
+    <div id="tipue_search_content">HW11 << <a href='HW11.html'>Previous</a> <a href='w10.html'>Next</a> >> w10<br /><h1>W13</h1>
+<!-- 引入 Brython 程式庫 -->
+<script src="./../cmsimde/static/brython.js"></script>
+<script src="./../cmsimde/static/brython_stdlib.js"></script>
+<!-- 啟動 Brython -->
+<script>
+window.onload = function() {
+    brython({debug:1, pythonpath:['./../cmsimde/static/', '../../downloads/py/']});
+}
+</script>
+<!-- 設置容器 -->
+<div id="brython div1">
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">&lt;!-- 引入 Brython 程式庫 --&gt;
+&lt;script src="./../cmsimde/static/brython.js"&gt;&lt;/script&gt;
+&lt;script src="./../cmsimde/static/brython_stdlib.js"&gt;&lt;/script&gt;
+&lt;!-- 啟動 Brython --&gt;
+&lt;script&gt;// &lt;![CDATA[
+window.onload = function() {
+    brython({debug:1, pythonpath:['./../cmsimde/static/', '../../downloads/py/']});
+}
+// ]]&gt;&lt;/script&gt;
+&lt;!-- 設置容器 --&gt;
+&lt;div id="brython div1"&gt;&lt;/div&gt;
+&lt;!-- 利用 Brython 繪圖 --&gt;
+&lt;script type="text/python"&gt;// &lt;![CDATA[
+from browser import html
+from browser import document as doc
+
+# 利用 HTML 建立 canvas 並定義特性
+canvas = html.CANVAS(width=600, height=600)
+brython_div = doc["brython div1"]
+brython_div &lt;= canvas
+ctx = canvas.getContext("2d")
+
+# 畫兩個矩形 (紅色邊框)
+ctx.strokeStyle = 'red'
+ctx.beginPath()
+ctx.rect(100, 100, 200, 200)
+ctx.rect(200, 200, 200, 200)
+ctx.stroke()
+
+# 畫對角線 (藍色)
+ctx.strokeStyle = 'blue'
+ctx.beginPath()
+ctx.moveTo(100, 100)
+ctx.lineTo(300, 300)
+ctx.stroke()
+
+# 畫兩個圓形 (黑色)
+ctx.strokeStyle = 'black'
+ctx.beginPath()
+ctx.arc(200, 200, 141.4, 0, 2 * 3.14)
+ctx.stroke()
+ctx.beginPath()
+ctx.arc(300, 300, 141.4, 0, 2 * 3.14)
+ctx.stroke()
+
+
+# 儲存幾何參數
+shapes = {
+    "circle1": (200, 200, 141.4),
+    "circle2": (300, 300, 141.4),
+    "square1": (100, 100, 300, 300),
+    "square2": (200, 200, 400, 400),
+}
+
+# 簡化的判定函式
+def is_in_circle(x, y, cx, cy, r):
+    return (x - cx) ** 2 + (y - cy) ** 2 &lt; r ** 2
+
+def is_in_square(x, y, x1, y1, x2, y2):
+    return x1 &lt;= x &lt;= x2 and y1 &lt;= y &lt;= y2
+
+# 根據點判定區域並返回顏色
+def get_region_color(x, y):
+    c1 = is_in_circle(x, y, *shapes["circle1"])
+    c2 = is_in_circle(x, y, *shapes["circle2"])
+    s1 = is_in_square(x, y, *shapes["square1"])
+    s2 = is_in_square(x, y, *shapes["square2"])
+
+    # 不在任何圓內
+    if not c1 and not c2:
+        return None
+
+    # 同時在兩圓內的區域分割，這裡會根據交集劃分 4 個區域
+    if c1 and c2:
+        # 依照相對於對角線的上下、左右位置分割區域，給予不同顏色
+        if x &lt; 250 and y &lt; 250:
+            return "#2894FF"  # 左上區域
+        elif x &gt;= 250 and y &lt; 250:
+            return "#66B3FF"  # 右上區域
+        elif x &lt; 250 and y &gt;= 250:
+            return "#00FFFF"  # 左下區域
+        elif x &gt;= 250 and y &gt;= 250:
+            return "#80FFFF"  # 右下區域
+
+    # 第一個圓的判定
+    if c1:
+        if s1:
+            return "#28004D" if y &lt; x else "#96FED1"
+        if y &lt; shapes["square1"][1]:
+            return "#00EC00"  
+        if y &gt; shapes["square1"][3]:
+            return "#53FF53"  
+        if x &lt; shapes["square1"][0]:
+            return "#02DF82"  
+        if x &gt; shapes["square1"][2]:
+            return "#1AFD9C"  
+
+    # 第二個圓的判定
+    if c2:
+        if s2:
+            return "#006030"  
+        if y &lt; shapes["square2"][1]:
+            return "#5B4B00"  
+        if y &gt; shapes["square2"][3]:
+            return "#A23400"  
+        if x &lt; shapes["square2"][0]:
+            return "#82D900"  
+        if x &gt; shapes["square2"][2]:
+            return "#6FB7B7"  
+
+    return "#01B468"  # 默認顏色
+
+# 繪製掃描點並著色
+def scan_and_draw():
+    step = 1  # 減小步長提升細膩程度
+    for y in range(0, canvas.height, step):
+        for x in range(0, canvas.width, step):
+            color = get_region_color(x, y)
+            if color:
+                ctx.fillStyle = color
+                ctx.fillRect(x, y, step, step)  # 使用細小矩形填充
+
+# 開始掃描和著色
+scan_and_draw()
+
+# 畫兩個矩形 (紅色邊框)
+ctx.strokeStyle = 'red'
+ctx.beginPath()
+ctx.rect(100, 100, 200, 200)
+ctx.rect(200, 200, 200, 200)
+ctx.stroke()
+
+# 畫對角線 (藍色)
+ctx.strokeStyle = 'blue'
+ctx.beginPath()
+ctx.moveTo(100, 100)
+ctx.lineTo(300, 300)
+ctx.stroke()
+
+# 畫兩個圓形 (黑色)
+ctx.strokeStyle = 'black'
+ctx.beginPath()
+ctx.arc(200, 200, 141.4, 0, 2 * 3.14)
+ctx.stroke()
+ctx.beginPath()
+ctx.arc(300, 300, 141.4, 0, 2 * 3.14)
+ctx.stroke()
+// ]]&gt;&lt;/script&gt;</pre>
 </div>
-</div>
-<div>
-<div class="line number1 index0 alt2">
-<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from coppeliasim_zmqremoteapi_client import RemoteAPIClient
-import time
-import keyboard
- 
-# 利用 zmqRemoteAPI 以 23000 對場景伺服器進行連線
-client = RemoteAPIClient('172.20.10.2', 23000)
-# 以 getObject 方法取得場景物件
-sim = client.getObject('sim')
-box = sim.getObject('/box')
- 
-# 啟動模擬
-sim.startSimulation()
- 
-# 設定立方體的尺寸和初始位置
-cube_size = 0.2  # 20 cm
-spacing = 0.5  # 50 cm 之間的距離（可根據需求調整）
- 
-# 擺放立方體的行數和每行的數量
-rows = 5  # 從第 1 行到第 5 行
-cubes_in_row = [1, 3, 5, 7, 9]  # 每行立方體的數量
- 
-# 在正的 Y 方向擺放立方體
-for row in range(rows):
-    # 計算每行的起始 x 位置，讓其對稱
-    start_row_x = - (cubes_in_row[row] - 1) * spacing / 2
-     
-    for col in range(cubes_in_row[row]):
-        # 計算每個立方體的位置
-        x_position = start_row_x + col * spacing
-        y_position = row * spacing  # 垂直方向上每行間距
-         
-        # 建立立方體
-        cube_handle = sim.createPrimitiveShape(sim.primitiveshape_cuboid, [cube_size, cube_size, cube_size], 0)
-        sim.setObjectPosition(cube_handle, -1, [x_position, y_position, cube_size / 2])  # z 方向上升到立方體的中心
- 
-# 在負的 Y 方向擺放立方體
-for row in range(rows):
-    # 計算每行的起始 x 位置，讓其對稱
-    start_row_x = - (cubes_in_row[row] - 1) * spacing / 2
-     
-    for col in range(cubes_in_row[row]):
-        # 計算每個立方體的位置
-        x_position = start_row_x + col * spacing
-        y_position = -row * spacing  # 負的 Y 方向
-         
-        # 建立立方體
-        cube_handle = sim.createPrimitiveShape(sim.primitiveshape_cuboid, [cube_size, cube_size, cube_size], 0)
-        sim.setObjectPosition(cube_handle, -1, [x_position, y_position, cube_size / 2])  # z 方向上升到立方體的中心
- 
-# 完成立方體的擺放
-print("立方體已成功擺放!")
- 
-# 設定主迴圈
-while True:
-    # 在這裡可以進行其他模擬操作
-    time.sleep(0.1)  # 確保循環不會過快
- 
-    if keyboard.is_pressed('q'):
-        # 可以按下 q 鍵跳出重複執行迴圈
-        break
- 
-# 終止模擬
-sim.stopSimulation()</pre>
-</div>
-</div>
-<br />W5 << <a href='W5.html'>Previous</a> <a href='w7.html'>Next</a> >> w7</div>
+<!-- 利用 Brython 繪圖 -->
+<script type="text/python">
+from browser import html
+from browser import document as doc
+
+# 利用 HTML 建立 canvas 並定義特性
+canvas = html.CANVAS(width=600, height=600)
+brython_div = doc["brython div1"]
+brython_div <= canvas
+ctx = canvas.getContext("2d")
+
+# 畫兩個矩形 (紅色邊框)
+ctx.strokeStyle = 'red'
+ctx.beginPath()
+ctx.rect(100, 100, 200, 200)
+ctx.rect(200, 200, 200, 200)
+ctx.stroke()
+
+# 畫對角線 (藍色)
+ctx.strokeStyle = 'blue'
+ctx.beginPath()
+ctx.moveTo(100, 100)
+ctx.lineTo(300, 300)
+ctx.stroke()
+
+# 畫兩個圓形 (黑色)
+ctx.strokeStyle = 'black'
+ctx.beginPath()
+ctx.arc(200, 200, 141.4, 0, 2 * 3.14)
+ctx.stroke()
+ctx.beginPath()
+ctx.arc(300, 300, 141.4, 0, 2 * 3.14)
+ctx.stroke()
+
+
+# 儲存幾何參數
+shapes = {
+    "circle1": (200, 200, 141.4),
+    "circle2": (300, 300, 141.4),
+    "square1": (100, 100, 300, 300),
+    "square2": (200, 200, 400, 400),
+}
+
+# 簡化的判定函式
+def is_in_circle(x, y, cx, cy, r):
+    return (x - cx) ** 2 + (y - cy) ** 2 < r ** 2
+
+def is_in_square(x, y, x1, y1, x2, y2):
+    return x1 <= x <= x2 and y1 <= y <= y2
+
+# 根據點判定區域並返回顏色
+def get_region_color(x, y):
+    c1 = is_in_circle(x, y, *shapes["circle1"])
+    c2 = is_in_circle(x, y, *shapes["circle2"])
+    s1 = is_in_square(x, y, *shapes["square1"])
+    s2 = is_in_square(x, y, *shapes["square2"])
+
+    # 不在任何圓內
+    if not c1 and not c2:
+        return None
+
+    # 同時在兩圓內的區域分割，這裡會根據交集劃分 4 個區域
+    if c1 and c2:
+        # 依照相對於對角線的上下、左右位置分割區域，給予不同顏色
+        if x < 250 and y < 250:
+            return "#2894FF"  # 左上區域
+        elif x >= 250 and y < 250:
+            return "#66B3FF"  # 右上區域
+        elif x < 250 and y >= 250:
+            return "#00FFFF"  # 左下區域
+        elif x >= 250 and y >= 250:
+            return "#80FFFF"  # 右下區域
+
+    # 第一個圓的判定
+    if c1:
+        if s1:
+            return "#28004D" if y < x else "#96FED1"
+        if y < shapes["square1"][1]:
+            return "#00EC00"  
+        if y > shapes["square1"][3]:
+            return "#53FF53"  
+        if x < shapes["square1"][0]:
+            return "#02DF82"  
+        if x > shapes["square1"][2]:
+            return "#1AFD9C"  
+
+    # 第二個圓的判定
+    if c2:
+        if s2:
+            return "#006030"  
+        if y < shapes["square2"][1]:
+            return "#5B4B00"  
+        if y > shapes["square2"][3]:
+            return "#A23400"  
+        if x < shapes["square2"][0]:
+            return "#82D900"  
+        if x > shapes["square2"][2]:
+            return "#6FB7B7"  
+
+    return "#01B468"  # 默認顏色
+
+# 繪製掃描點並著色
+def scan_and_draw():
+    step = 1  # 減小步長提升細膩程度
+    for y in range(0, canvas.height, step):
+        for x in range(0, canvas.width, step):
+            color = get_region_color(x, y)
+            if color:
+                ctx.fillStyle = color
+                ctx.fillRect(x, y, step, step)  # 使用細小矩形填充
+
+# 開始掃描和著色
+scan_and_draw()
+
+# 畫兩個矩形 (紅色邊框)
+ctx.strokeStyle = 'red'
+ctx.beginPath()
+ctx.rect(100, 100, 200, 200)
+ctx.rect(200, 200, 200, 200)
+ctx.stroke()
+
+# 畫對角線 (藍色)
+ctx.strokeStyle = 'blue'
+ctx.beginPath()
+ctx.moveTo(100, 100)
+ctx.lineTo(300, 300)
+ctx.stroke()
+
+# 畫兩個圓形 (黑色)
+ctx.strokeStyle = 'black'
+ctx.beginPath()
+ctx.arc(200, 200, 141.4, 0, 2 * 3.14)
+ctx.stroke()
+ctx.beginPath()
+ctx.arc(300, 300, 141.4, 0, 2 * 3.14)
+ctx.stroke()
+</script><br />HW11 << <a href='HW11.html'>Previous</a> <a href='w10.html'>Next</a> >> w10</div>
         
     <!-- footer -->
       <div class="container">
