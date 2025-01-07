@@ -647,14 +647,158 @@ sim.stopSimulation()</pre>
 <p>每六人為一組進行協同程式練習</p>
 <p>透過 Jupyterlab 協同網頁, 輪流指定各組編寫 HW 2 相關的程式練習, 以及網頁內容 (localhost 與 Codespaces 環境)編輯.</p>
 <h3>HW 16.1Exam</h3>
-<p><a href="https://mdecp2024.github.io/hw-41323209/content/Brython.html?src=https://gist.githubusercontent.com/41323209/9670c4c811c99cb9b9b0ddd1b25d77d1/raw/d9e768b15af69fd15d4febd59f929e631bd3dc75/HW16.1%2520.py">Exam16.1</a></p><h1>HW 3</h1>
+<p><a href="https://mdecp2024.github.io/hw-41323209/content/Brython.html?src=https://gist.githubusercontent.com/41323209/9670c4c811c99cb9b9b0ddd1b25d77d1/raw/d9e768b15af69fd15d4febd59f929e631bd3dc75/HW16.1%2520.py">Exam16.1</a></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from browser import html
+from browser import document as doc
+
+# 利用 html 建立 canvas 超文件物件
+canvas = html.CANVAS(width=600, height=600)
+brython_div = doc["brython_div1"]
+brython_div &lt;= canvas
+
+# 取得 canvas 的繪圖上下文
+ctx = canvas.getContext("2d")
+
+# 設置線條樣式
+ctx.strokeStyle = "#00bfff";
+ctx.lineWidth = 8;
+
+# 定義原點偏移量
+origin_x = 31
+origin_y = 7
+
+# 標示原點座標
+ctx.font = "12px Arial"
+ctx.fillStyle = "black"
+ctx.fillText("(32, 09)", 35, 50)
+
+# 繪製迷宮圖案
+ctx.beginPath();
+
+# 外框左上
+ctx.moveTo(50 + origin_x, 50 + origin_y);
+ctx.lineTo(250 + origin_x, 50 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 外框右上
+ctx.beginPath();
+ctx.moveTo(350 + origin_x, 50 + origin_y);
+ctx.lineTo(550 + origin_x, 50 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 外框左
+ctx.beginPath();
+ctx.moveTo(50 + origin_x, 50 + origin_y);
+ctx.lineTo(50 + origin_x, 550 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 外框右
+ctx.beginPath();
+ctx.moveTo(550 + origin_x, 50 + origin_y);
+ctx.lineTo(550 + origin_x, 550 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 外框左下
+ctx.moveTo(50 + origin_x, 550 + origin_y);
+ctx.lineTo(250 + origin_x, 550 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 外框右下
+ctx.beginPath();
+ctx.moveTo(350 + origin_x, 550 + origin_y);
+ctx.lineTo(550 + origin_x, 550 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 內部橫1
+ctx.beginPath();
+ctx.moveTo(150 + origin_x, 150 + origin_y);
+ctx.lineTo(450 + origin_x, 150 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 內部橫2
+ctx.beginPath();
+ctx.moveTo(50 + origin_x, 250 + origin_y);
+ctx.lineTo(250 + origin_x, 250 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 內部橫3
+ctx.beginPath();
+ctx.moveTo(150 + origin_x, 350 + origin_y);
+ctx.lineTo(450 + origin_x, 350 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 內部橫4
+ctx.beginPath();
+ctx.moveTo(250 + origin_x, 450 + origin_y);
+ctx.lineTo(350 + origin_x, 450 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 內部直1
+ctx.beginPath();
+ctx.moveTo(250 + origin_x, 150 + origin_y);
+ctx.lineTo(250 + origin_x, 253.5 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 內部直2
+ctx.beginPath();
+ctx.moveTo(450 + origin_x, 150 - 3.5 + origin_y);
+ctx.lineTo(450 + origin_x, 250 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 內部直3
+ctx.beginPath();
+ctx.moveTo(350 + origin_x, 250 + origin_y);
+ctx.lineTo(350 + origin_x, 350 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 內部直4
+ctx.beginPath();
+ctx.moveTo(150 + origin_x, 350 + origin_y);
+ctx.lineTo(150 + origin_x, 350 + 100 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 內部直5
+ctx.beginPath();
+ctx.moveTo(450 + origin_x, 350 + origin_y);
+ctx.lineTo(450 + origin_x, 350 + 200 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 內部直6
+ctx.beginPath();
+ctx.moveTo(250 + origin_x, 450 + origin_y);
+ctx.lineTo(250 + origin_x, 450 + 100 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 設置線條樣式
+ctx.strokeStyle = "	#6F00D2";
+ctx.lineWidth = 8;
+
+# 紀錄完成訊息
+console.log("迷宮繪製完成");</pre>
+<p></p><h1>HW 3</h1>
 <h4>主題: Python 的數字、演算法與迴圈 (20%)</h4>
 <p style="padding-left: 30px;">Python 課程教材: <a href="https://www.learnpythonwithjupyter.com/">https://www.learnpythonwithjupyter.com/</a> - PART 4 and Part 5</p>
 <p>完成上述流程整理後, 請將 HW3 自評分數輸入 cp2024 自評表單中.</p>
 <h2>HW 3 Exam</h2>
 <p>每六人為一組進行協同程式練習</p>
 <p>透過 Jupyterlab 協同網頁, 輪流指定各組編寫 HW 3 相關的程式練習, 以及網頁內容 (localhost 與 Codespaces 環境)編輯.</p>
-<h3>HW 16.2 Exam</h3>
+<h2>16.1Exam</h2><h3>HW 16.2 Exam</h3>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/bXel8PUfje8" width="560"></iframe></p><h1>HW 4</h1>
 <h4>主題: 利用 Python 控制機電模擬系統 (20%)</h4>
 <p style="padding-left: 30px;">利用 <a href="https://solvespace.com/">https://solvespace.com/</a> 建立機械系統零組件</p>

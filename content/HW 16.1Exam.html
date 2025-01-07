@@ -130,7 +130,7 @@ img.add_border {
                             <li><a href="./../blog/index.html">blog</a></li>
                         </ul>
                       </li>
-                     <li><a href='About.html'>About</a><li><a href='Attendance.html'>Attendance</a><li class='has-children'><a href='HW 1.html'>HW 1</a><ul class='dropdown'><li class='has-children'><a href='HW11.html'>HW11</a><ul class='dropdown'><li><a href='W13.html'>W13</a><li><a href='W14.html'>W14</a><li><a href='w15.html'>w15</a><li><a href='w10.html'>w10</a><li><a href='W5.html'>W5</a></li></ul><li class='has-children'><a href='w6.html'>w6</a><ul class='dropdown'><li><a href='w7.html'>w7</a></li></li></ul></ul><li class='has-children'><a href='HW 2.html'>HW 2</a><ul class='dropdown'><li class='has-children'><a href='HW 2 Exam.html'>HW 2 Exam</a><ul class='dropdown'><li><a href='HW 16.1Exam.html'>HW 16.1Exam</a></li></li></ul></ul><li class='has-children'><a href='HW 3.html'>HW 3</a><ul class='dropdown'><li class='has-children'><a href='HW 3 Exam.html'>HW 3 Exam</a><ul class='dropdown'><li><a href='HW 16.2 Exam.html'>HW 16.2 Exam</a></li></li></ul></ul><li class='has-children'><a href='HW 4.html'>HW 4</a><ul class='dropdown'><li><a href='HW 4 Exam.html'>HW 4 Exam</a></li></ul><li><a href='Final Report.html'>Final Report</a><li><a href='Brython.html'>Brython</a></li>
+                     <li><a href='About.html'>About</a><li><a href='Attendance.html'>Attendance</a><li class='has-children'><a href='HW 1.html'>HW 1</a><ul class='dropdown'><li class='has-children'><a href='HW11.html'>HW11</a><ul class='dropdown'><li><a href='W13.html'>W13</a><li><a href='W14.html'>W14</a><li><a href='w15.html'>w15</a><li><a href='w10.html'>w10</a><li><a href='W5.html'>W5</a></li></ul><li class='has-children'><a href='w6.html'>w6</a><ul class='dropdown'><li><a href='w7.html'>w7</a></li></li></ul></ul><li class='has-children'><a href='HW 2.html'>HW 2</a><ul class='dropdown'><li class='has-children'><a href='HW 2 Exam.html'>HW 2 Exam</a><ul class='dropdown'><li><a href='HW 16.1Exam.html'>HW 16.1Exam</a></li></li></ul></ul><li class='has-children'><a href='HW 3.html'>HW 3</a><ul class='dropdown'><li><a href='HW 3 Exam.html'>HW 3 Exam</a><li class='has-children'><a href='16.1Exam.html'>16.1Exam</a><ul class='dropdown'><li><a href='HW 16.2 Exam.html'>HW 16.2 Exam</a></li></li></ul></ul><li class='has-children'><a href='HW 4.html'>HW 4</a><ul class='dropdown'><li><a href='HW 4 Exam.html'>HW 4 Exam</a></li></ul><li><a href='Final Report.html'>Final Report</a><li><a href='Brython.html'>Brython</a></li>
                       </ul>
                 </nav>
               </div>
@@ -142,7 +142,151 @@ img.add_border {
           
         </header>
     <div id="tipue_search_content">HW 2 Exam << <a href='HW 2 Exam.html'>Previous</a> <a href='HW 3.html'>Next</a> >> HW 3<br /><h1>HW 16.1Exam</h1>
-<p><a href="https://mdecp2024.github.io/hw-41323209/content/Brython.html?src=https://gist.githubusercontent.com/41323209/9670c4c811c99cb9b9b0ddd1b25d77d1/raw/d9e768b15af69fd15d4febd59f929e631bd3dc75/HW16.1%2520.py">Exam16.1</a></p><br />HW 2 Exam << <a href='HW 2 Exam.html'>Previous</a> <a href='HW 3.html'>Next</a> >> HW 3</div>
+<p><a href="https://mdecp2024.github.io/hw-41323209/content/Brython.html?src=https://gist.githubusercontent.com/41323209/9670c4c811c99cb9b9b0ddd1b25d77d1/raw/d9e768b15af69fd15d4febd59f929e631bd3dc75/HW16.1%2520.py">Exam16.1</a></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from browser import html
+from browser import document as doc
+
+# 利用 html 建立 canvas 超文件物件
+canvas = html.CANVAS(width=600, height=600)
+brython_div = doc["brython_div1"]
+brython_div &lt;= canvas
+
+# 取得 canvas 的繪圖上下文
+ctx = canvas.getContext("2d")
+
+# 設置線條樣式
+ctx.strokeStyle = "#00bfff";
+ctx.lineWidth = 8;
+
+# 定義原點偏移量
+origin_x = 31
+origin_y = 7
+
+# 標示原點座標
+ctx.font = "12px Arial"
+ctx.fillStyle = "black"
+ctx.fillText("(32, 09)", 35, 50)
+
+# 繪製迷宮圖案
+ctx.beginPath();
+
+# 外框左上
+ctx.moveTo(50 + origin_x, 50 + origin_y);
+ctx.lineTo(250 + origin_x, 50 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 外框右上
+ctx.beginPath();
+ctx.moveTo(350 + origin_x, 50 + origin_y);
+ctx.lineTo(550 + origin_x, 50 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 外框左
+ctx.beginPath();
+ctx.moveTo(50 + origin_x, 50 + origin_y);
+ctx.lineTo(50 + origin_x, 550 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 外框右
+ctx.beginPath();
+ctx.moveTo(550 + origin_x, 50 + origin_y);
+ctx.lineTo(550 + origin_x, 550 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 外框左下
+ctx.moveTo(50 + origin_x, 550 + origin_y);
+ctx.lineTo(250 + origin_x, 550 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 外框右下
+ctx.beginPath();
+ctx.moveTo(350 + origin_x, 550 + origin_y);
+ctx.lineTo(550 + origin_x, 550 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 內部橫1
+ctx.beginPath();
+ctx.moveTo(150 + origin_x, 150 + origin_y);
+ctx.lineTo(450 + origin_x, 150 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 內部橫2
+ctx.beginPath();
+ctx.moveTo(50 + origin_x, 250 + origin_y);
+ctx.lineTo(250 + origin_x, 250 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 內部橫3
+ctx.beginPath();
+ctx.moveTo(150 + origin_x, 350 + origin_y);
+ctx.lineTo(450 + origin_x, 350 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 內部橫4
+ctx.beginPath();
+ctx.moveTo(250 + origin_x, 450 + origin_y);
+ctx.lineTo(350 + origin_x, 450 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 內部直1
+ctx.beginPath();
+ctx.moveTo(250 + origin_x, 150 + origin_y);
+ctx.lineTo(250 + origin_x, 253.5 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 內部直2
+ctx.beginPath();
+ctx.moveTo(450 + origin_x, 150 - 3.5 + origin_y);
+ctx.lineTo(450 + origin_x, 250 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 內部直3
+ctx.beginPath();
+ctx.moveTo(350 + origin_x, 250 + origin_y);
+ctx.lineTo(350 + origin_x, 350 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 內部直4
+ctx.beginPath();
+ctx.moveTo(150 + origin_x, 350 + origin_y);
+ctx.lineTo(150 + origin_x, 350 + 100 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 內部直5
+ctx.beginPath();
+ctx.moveTo(450 + origin_x, 350 + origin_y);
+ctx.lineTo(450 + origin_x, 350 + 200 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 內部直6
+ctx.beginPath();
+ctx.moveTo(250 + origin_x, 450 + origin_y);
+ctx.lineTo(250 + origin_x, 450 + 100 + origin_y);
+ctx.closePath();
+ctx.stroke();
+
+# 設置線條樣式
+ctx.strokeStyle = "	#6F00D2";
+ctx.lineWidth = 8;
+
+# 紀錄完成訊息
+console.log("迷宮繪製完成");</pre>
+<p></p><br />HW 2 Exam << <a href='HW 2 Exam.html'>Previous</a> <a href='HW 3.html'>Next</a> >> HW 3</div>
         
     <!-- footer -->
       <div class="container">
